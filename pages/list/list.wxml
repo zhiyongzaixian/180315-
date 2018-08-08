@@ -1,0 +1,18 @@
+<!--pages/list/list.wxml-->
+<view>
+	<swiper indicator-dots indicator-color='yellowgreen' indicator-active-color='pink'>
+		<swiper-item>
+			<image src='/images/detail/carousel/01.jpg'></image>
+		</swiper-item>
+		<swiper-item>
+			<image src='/images/detail/carousel/02.jpg'></image>
+		</swiper-item>
+		<swiper-item>
+			<image src='/images/detail/carousel/03.jpg'></image>
+		</swiper-item>
+		<swiper-item>
+			<image src='/images/detail/carousel/04.jpg'></image>
+		</swiper-item>
+	</swiper>
+
+</view>

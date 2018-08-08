@@ -10,11 +10,12 @@ Page({
 		isShow: true
   },
 
-	handleParent(){
-		console.log('父元素');
-	},
-	handleChild() {
-		console.log('子元素');
+	handleClick(){
+		// 点击跳转到list页面
+		wx.navigateTo({
+			url: '/pages/list/list'
+		})
+		
 	},
   /**
    * 生命周期函数--监听页面加载
