@@ -1,5 +1,8 @@
 // pages/detail/detail.js
 let datas = require('../../datas/list-data.js');
+let appDatas = getApp();
+console.log(appDatas, typeof appDatas);
+
 console.log(datas);
 Page({
 
@@ -9,7 +12,8 @@ Page({
   data: {
 		detailObj: {},
 		index: null,
-		isCollected: false
+		isCollected: false,
+		isMusicPlay: false
   },
 
   /**
@@ -40,6 +44,42 @@ Page({
 				isCollected: true
 			})
 		}
+
+		// 监听音乐播放
+		wx.onBackgroundAudioPlay(() => {
+			console.log('音乐播放');
+			// 修改isMusicPlay状态值
+			this.setData({
+				isMusicPlay: true
+			});
+
+			// 修改appDatas中额数据
+			appDatas.data.isPlay = true;
+			appDatas.data.pageIndex = index;
+
+		});
+
+		// 判断音乐是否在播放
+		if(appDatas.data.isPlay && appDatas.data.pageIndex === index){
+			// 修改isMusicPlay状态值
+			this.setData({
+				isMusicPlay: true
+			});
+
+		}
+
+		
+		// 监听音乐暂停
+		wx.onBackgroundAudioPause(() => {
+			// 修改isMusicPlay状态值
+			this.setData({
+				isMusicPlay: false
+			});
+
+			// 修改appDatas中额数据
+			appDatas.data.isPlay = false;
+			// appDatas.data.pageIndex = index;
+		})
   },
 	handleCollection(){
 		let isCollected = !this.data.isCollected;
@@ -75,6 +115,28 @@ Page({
 			}
 		})
 	
+	},
+	handleMusicPlay(){
+		// 处理音乐播放
+		let isMusicPlay = !this.data.isMusicPlay;
+		this.setData({
+			isMusicPlay
+		});
+
+
+		// 控制音乐播放
+		if (isMusicPlay){
+			// 播放音乐
+			let { dataUrl, title } = this.data.detailObj.music;
+			wx.playBackgroundAudio({
+				dataUrl,
+				title
+			})
+		}else {
+			// 暂停音乐
+			wx.pauseBackgroundAudio()
+		}
+
 	}
   
 })
