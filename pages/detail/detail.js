@@ -1,34 +1,29 @@
-// pages/list/list.js
+// pages/detail/detail.js
 let datas = require('../../datas/list-data.js');
-console.log(datas, typeof datas);
+console.log(datas);
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-		listArr: []
+		detailObj: {},
+		index: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		console.log(options);
+		// 获取参数值
+		let index = options.index;
+		// 更新data中detailObj的状态值
 		this.setData({
-			listArr: datas.list_data
-		})
+			detailObj: datas.list_data[index],
+			index
+		});
   },
-
-	// 点击跳转到detail详情页
-	toDetail(event){
-		console.log(event);
-		// 获取点击跳转对应的下标
-		let index = event.currentTarget.dataset.index;
-
-		wx.navigateTo({
-			url: '/pages/detail/detail?index=' + index,
-		})
-	},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -48,14 +43,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-		console.log('页面隐藏');
+  
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-		console.log('页面卸载');
+  
   },
 
   /**
