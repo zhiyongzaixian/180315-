@@ -1,5 +1,5 @@
 <!--pages/movies/movies.wxml-->
-<view wx:for='{{moviesArr}}' wx:key='{{index}}'>
+<navigator url='/pages/movieDetail/movieDetail?index={{index}}' wx:for='{{moviesArr}}' wx:key='{{index}}'>
 	<view class='moviesContainer'>
 		<image class='movieImg' src='{{item.images.large}}'></image>
 		<view class='movie_detail'>
@@ -9,4 +9,4 @@
 		</view>
 		<text class='movie_rating'>{{item.rating.average}}</text>
 	</view>
-</view>
+</navigator>
