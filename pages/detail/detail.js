@@ -65,7 +65,6 @@ Page({
 			this.setData({
 				isMusicPlay: true
 			});
-
 		}
 
 		
@@ -137,6 +136,14 @@ Page({
 			wx.pauseBackgroundAudio()
 		}
 
+	},
+	// 处理点击分享功能
+	handleShare(){
+		wx.showActionSheet({
+			itemList: [
+				'分享到朋友圈', '分享到qq空间', '分享到微博'
+			]
+		})
 	}
   
 })
