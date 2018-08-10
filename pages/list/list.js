@@ -29,7 +29,14 @@ Page({
 			url: '/pages/detail/detail?index=' + index,
 		})
 	},
-
+	// 点击了轮播图的时候跳转
+	carouselToDetail(event){
+		console.log(event);
+		let index = event.target.dataset.index;
+		wx.navigateTo({
+			url: '/pages/detail/detail?index=' + index,
+		})
+	},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -8,7 +8,8 @@ Page({
    */
   data: {
 		detailObj: {},
-		index: null
+		index: null,
+		isCollected: false
   },
 
   /**
@@ -23,54 +24,57 @@ Page({
 			detailObj: datas.list_data[index],
 			index
 		});
-  },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+		// 根据本地缓存的数据判断用户是否收藏当前的文章
+		let detailStorage = wx.getStorageSync('isCollected');
+		console.log(detailStorage);
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+		if (!detailStorage){
+			// 在缓存中初始化空对象
+			wx.setStorageSync('isCollected', {});
+		}
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+		// 判断用户是否收藏
+		if (detailStorage[index]){ // 收藏过
+			this.setData({
+				isCollected: true
+			})
+		}
   },
+	handleCollection(){
+		let isCollected = !this.data.isCollected;
+		// 更新状态
+		this.setData({
+			isCollected
+		});
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+		// 提示用户
+		let title = isCollected?'收藏成功': '取消收藏';
+		wx.showToast({
+			title,
+			icon: 'success'
+		});
+		// 缓存数据到本地
+		// {1：true, 2: false}
+		let {index} = this.data;
+		// 不可行，会覆盖之前的状态
+		// let obj = {};  // {0: true, 2: true}
+		wx.getStorage({
+			key: 'isCollected',
+			success: (datas) => {
+				console.log(datas, '点击获取的数据');
+				let obj = datas.data;  // {0: true, 1: true}
+				obj[index] = isCollected;
+				wx.setStorage({
+					key: 'isCollected',
+					data: obj,
+					success: () => {
+						console.log('缓存成功');
+					}
+				});
+			}
+		})
+	
+	}
   
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })
